@@ -60,7 +60,11 @@ quad a b c
 
 -- Q5
 sum_is_divisible :: Integer -> Integer -> Integer -> Bool
-sum_is_divisible a b c
+sum_is_divisible a b c =
     if (mod (sum a b) c == 0)
         then True
     else False
+    where
+        sum a b
+            | a == b = b
+            | otherwise = a + sum (a + 1) b
