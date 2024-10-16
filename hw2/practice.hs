@@ -68,3 +68,42 @@ sum_is_divisible a b c =
         sum a b
             | a == b = b
             | otherwise = a + sum (a + 1) b
+
+-- Q6
+find_min :: [Integer] -> Integer
+find_min lst
+    | length lst == 1 = head lst
+    | otherwise = min (head lst) (find_min (tail lst))
+
+-- Q7
+all_factors :: Integer -> [Integer]
+all_factors n = [x | x <- [1..n], mod n x == 0]
+
+perfect_numbers :: [Integer]
+perfect_numbers = [x | x <- [1..], sum (init (all_factors x)) == x]
+
+-- Q8
+count_occurrences :: [Integer] -> [Integer] -> Integer
+count_occurrences [] _ = 1
+count_occurrences _ [] = 0
+count_occurrences lst1 lst2
+    | head lst1 == head lst2 = count_occurrences (tail lst1) (tail lst2) + count_occurrences lst1 (tail lst2)
+    | otherwise = count_occurrences lst1 (tail lst2)
+
+-- Q9
+fibonacci :: Integer -> [Integer]
+fibonacci n = reverse (fib_reverse n)
+fib_reverse n
+    | n <= 0 = []
+    | otherwise = helper n 0 1 : fib_reverse (n-1)
+    where
+        helper 0 a _ = a -- nth fibonacci number
+        helper n a b = helper (n-1) b (a+b)
+
+rle :: [Integer] -> [(Integer, Integer)]
+rle [] = []
+rle lst = helper (tail lst) (head lst) 1
+helper lst prev count
+    | lst == [] = [(prev, count)]
+    | head lst == prev = helper (tail lst) (head lst) (count+1)
+    | otherwise = (prev, count) : helper (tail lst) (head lst) 1
