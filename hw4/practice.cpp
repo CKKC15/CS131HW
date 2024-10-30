@@ -21,6 +21,8 @@ int longestRun(const vector<bool>& lst){
     }
     return max_count;
 }
+
+
 class Tree {
 public:
   unsigned value;

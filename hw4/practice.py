@@ -2,6 +2,16 @@
 def strip_characters(sentence, chars_to_remove):
     return "".join(filter(lambda x : x not in chars_to_remove, sentence))
 
+# PYTH10
+def closure_maker(x):
+   def closure_return(y):
+      return x + y
+   return closure_return
+
+closure = closure_maker(1)
+print(closure(2)) #this outputs 3
+
+
 # PYTH11
 # a)
 from functools import reduce
