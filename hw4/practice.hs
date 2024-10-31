@@ -19,6 +19,22 @@ data Tree =
     Empty | 
     Node Integer [Tree]
 
+-- HASK18
+data Event = Travel Integer | Fight Integer | Heal Integer
+super_giuseppe :: [Event] -> Integer
+super_giuseppe lst = helper lst 100 False
+    where
+        helper [] health _ = health -- done with game
+        helper _ health _ 
+            | health <= 0 = -1 -- lose all hp
+        helper (Travel dist:xs) health inDefenseMode
+            | inDefenseMode = helper xs health inDefenseMode -- don't gain any health
+            | otherwise = helper xs (min 100 (health + dist `div` 4)) inDefenseMode
+        helper (Fight hplost:xs) health inDefenseMode
+            | inDefenseMode = helper xs (health - hplost `div` 2) inDefenseMode -- lose half
+            | otherwise = helper xs (health - hplost) (health - hplost <= 40) 
+        helper (Heal hpgain:xs) health inDefenseMode = helper xs (min 100 (health + hpgain)) (health + hpgain <= 40) -- gain health and check if inDefenseMode
+
 -- HASK19
 -- a)
 sumSquares :: Integer -> Integer
